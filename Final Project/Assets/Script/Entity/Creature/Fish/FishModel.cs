@@ -14,30 +14,30 @@ public class FishModel : CreatureModel
     {
         //等object部分完成再寫
     }
-    protected override void SearchTarget(List<CreatureModel> targets)   //檢查附近是否有敵人
+    protected override void SearchTarget(List<GameObject> targets)   //檢查附近是否有敵人
     {
         enemies.Clear();
         panic = false;
-        foreach (EnemyModel enemy in targets)
+        foreach (GameObject creature in targets)
         {
-            if (Math.Abs(enemy.gameObject.transform.position.x - transform.position.x) < maxViewDistance)
+            EnemyModel enemy = creature.GetComponent<EnemyModel>();
+            if (Math.Abs(enemy.gameObject.transform.position.x - transform.position.x) < ViewDistance)
             {
                 enemies.Add(enemy);
                 panic = true;
             }
         }
-        speed = panic ? orginalSpeed * 2 : orginalSpeed;   //恐慌時加速
+        //speed = panic ? orginalSpeed * 2 : orginalSpeed;   //恐慌時加速
     }
     public virtual void Injured(int damage)   //被攻擊的時候觸發
     {
         HP -= damage;
-        Debug.Log(string.Format("{0} take {1} damage.", entityName, damage));   //暫時的測試訊息
         if (HP <= 0)
             Die();
     }
     protected void Die()
     {
-        Debug.Log(string.Format("{0} is dead.", entityName));   //暫時的測試訊息
+
     }
 
 }
