@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEngine.GraphicsBuffer;
 
 public class FishModel : CreatureModel
 {
@@ -29,15 +28,4 @@ public class FishModel : CreatureModel
         }
         //speed = panic ? orginalSpeed * 2 : orginalSpeed;   //恐慌時加速
     }
-    public virtual void Injured(int damage)   //被攻擊的時候觸發
-    {
-        HP -= damage;
-        if (HP <= 0)
-            Die();
-    }
-    protected void Die()
-    {
-
-    }
-
 }
