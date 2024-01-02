@@ -2,15 +2,29 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MedicineModel : MonoBehaviour
+public class MedicineModel : ObjectModel
 {
-    protected void mouse_click_generate()  //generate in mouse posision
+    [SerializeField]
+    public MedicineScriptTable medicine;
+    public Animator animator;
+    private void Start()
     {
-
+        animator.runtimeAnimatorController = medicine.Animation;
+    }
+    private void Update()
+    {
+        dropdown(gameObject);
+        when_object_auto_dissapear(ref timer, gameObject);
     }
 
-    protected void fish_touch() //when fish touch,dissapear
-    {
 
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.tag == "Fish")
+        {
+            Destroy(gameObject);
+        }
     }
+
+
 }

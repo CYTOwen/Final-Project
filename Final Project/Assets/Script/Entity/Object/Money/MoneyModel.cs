@@ -2,19 +2,36 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MoneyModel : MonoBehaviour
+public class MoneyModel : ObjectModel
 {
-    protected int money_value; //value of money
-    
-    protected void generate_in_fish_posision() //generate in fish posision
-    {
+    [SerializeField]
+    public MoneyScriptTable money;
+    public Animator animator;
 
+    private void Start()
+    {
+        animator.runtimeAnimatorController = money.Animation;
     }
 
-    protected void mouse_click_to_catch_money()  //mouse catch money
+    private void Update()
     {
+        dropdown(gameObject);
+        when_object_auto_dissapear(ref timer,gameObject);
+        Debug.Log(timer);
+        
+    }
 
+    public int getMoneyValue()
+    {
+        return money.money_value;
     }
 
     
+
+    void OnMouseDown()
+    {
+        gameObject.SetActive(false);
+    }
+
+
 }

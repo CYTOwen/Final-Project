@@ -2,17 +2,40 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FoodModel : MonoBehaviour
+public class FoodModel : ObjectModel
 {
-    protected int food_value; //value of food for fish upgrding
-    protected int food_generate_number_restriction; //restriction of food generate number
-    protected void mouse_click_generate()  //generate in mouse posision
-    {
+    [SerializeField]
+    public FoodScriptTable food;
+    public Animator animator;
 
+    private void Start()
+    {
+        animator.runtimeAnimatorController = food.Animation;
     }
 
-    protected void fish_touch() //when fish touch,dissapear
+    private void Update()
     {
+        dropdown(gameObject);
+        when_object_auto_dissapear(ref timer, gameObject);
+        
+    }
 
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.tag == "Fish")
+        {
+            Destroy(gameObject);
+        }
+    }
+
+    public int getFoodValue()
+    {
+        return food.food_value;
+    }
+
+    public int getFoodPrice()
+    {
+        return food.food_price;
     }
 }
