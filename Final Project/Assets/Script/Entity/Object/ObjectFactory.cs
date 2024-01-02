@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ObjectFactory : MonoBehaviour
 {
-    public virtual void CreateObject(float X,float Y)
+    public virtual void CreateObject(float X,float Y,int level)
     {
 
     }
