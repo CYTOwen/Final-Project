@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6f149d2e2694804f9a23017bdb4a803, type: 3}
   m_Name: Food Level3
   m_EditorClassIdentifier: 
-  food_value: 5
+  food_value: 70
   food_price: 0
   Animation: {fileID: 9100000, guid: f8187f0b2719a13469c7a3c1a52721f7, type: 2}
