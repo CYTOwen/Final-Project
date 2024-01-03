@@ -53,11 +53,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e516a101d0725b4a8e5197fa186c28f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyMeta: {fileID: 11400000, guid: 9fc7aa499ed498a47aa012f05e00903e, type: 2}
   m_rigidbody2D: {fileID: 3855879026885213526}
   m_rectTransform: {fileID: 4146352103981428615}
   m_animator: {fileID: 5142434343644781299}
   m_spriteRenderer: {fileID: 2271102228342453459}
+  enemyMeta: {fileID: 11400000, guid: 9fc7aa499ed498a47aa012f05e00903e, type: 2}
 --- !u!222 &4440546374810894533
 CanvasRenderer:
   m_ObjectHideFlags: 0

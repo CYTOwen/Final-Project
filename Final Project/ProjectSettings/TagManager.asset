@@ -7,6 +7,9 @@ TagManager:
   - Fish
   - Enemy
   - Pet
+  - Food
+  - Medicine
+  - Money
   layers:
   - Default
   - TransparentFX
