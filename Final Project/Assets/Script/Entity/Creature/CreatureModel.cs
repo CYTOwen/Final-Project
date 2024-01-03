@@ -12,7 +12,7 @@ public class CreatureModel : EntityModel
     protected EntityModel target;
     protected bool facingLeft = true;   //用來控制轉向動畫
 
-
+    protected RectTransform m_canvas;   //Canvas的RectTransform
     [SerializeField]
     protected Rigidbody2D m_rigidbody2D;   //掛在生物上的鋼體
     [SerializeField]
@@ -26,10 +26,14 @@ public class CreatureModel : EntityModel
     protected float[] timeStamp;   //用來記錄關鍵時刻
     protected float turnAnimationTime;
     protected System.Random rand = new System.Random();
+    public virtual void GetCanvasSize(RectTransform canvas)
+    {
+        m_canvas = canvas;
+    }
     protected virtual void Move()
     {
         int x = rand.Next(1000);   //隨機行動，每幀有0.3%的機率轉彎
-        if (target == null && ((x > 997 && timer - timeStamp[0] > turnCD) || (m_rectTransform.anchoredPosition.x > 910f && !facingLeft) || (m_rectTransform.anchoredPosition.x < -910f && facingLeft)))   //快碰到邊界的時候強制轉彎
+        if (target == null && ((x > 997 && timer - timeStamp[0] > turnCD) || (m_rectTransform.anchoredPosition.x > m_canvas.rect.width / 2 - 50 && !facingLeft) || (m_rectTransform.anchoredPosition.x < m_canvas.rect.width / -2 + 50 && facingLeft)))   //快碰到邊界的時候強制轉彎
         {
             Turn();
         }
@@ -47,8 +51,13 @@ public class CreatureModel : EntityModel
         }
         else   //平移
         {
-            m_rigidbody2D.velocity = new Vector2(100f * ((facingLeft) ? -1f : 1f), m_rigidbody2D.velocity.y).normalized * speed;
-            m_rigidbody2D.AddForce(new Vector2(0, rand.Next(-30, 31)));
+            int x = rand.Next(-30, 31);
+            m_rigidbody2D.velocity = new Vector2(100f * ((facingLeft) ? -1 * speed : speed), m_rigidbody2D.velocity.y);
+            m_rigidbody2D.velocity += new Vector2(0, (m_rigidbody2D.velocity.y > 100f || m_rigidbody2D.velocity.y < -100f) ? m_rigidbody2D.velocity.y / -2 : rand.Next(-3, 4));
+            if (m_rectTransform.anchoredPosition.y > m_canvas.rect.height / 2f - 50f)
+                m_rigidbody2D.AddForce(new Vector2(0, -100f));
+            if (m_rectTransform.anchoredPosition.y < m_canvas.rect.height / -2f + 50f)
+                m_rigidbody2D.AddForce(new Vector2(0, 100f));
         }
     }
     private void Turn()
