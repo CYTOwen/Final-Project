@@ -1,9 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
-//using System.Numerics;
-using System;
 
 sealed public class EnemyModel : CreatureModel
 {
@@ -33,7 +30,7 @@ sealed public class EnemyModel : CreatureModel
         m_animator.runtimeAnimatorController = enemyMeta.Animation;
         timer = 0;
         timeStamp = new float[2] { timer - turnCD, timer - searchCD };   //[0]：最近一次轉彎時間   [1]：最近一次搜索時間
-        turnAnimationTime = 0.5f;
+        AnimationTime = 0.5f;
     }
     // Update is called once per frame
     void Update()
@@ -42,18 +39,17 @@ sealed public class EnemyModel : CreatureModel
         SetAnimation();
         if (timer - timeStamp[1] > searchCD && target == null)   //定時搜索
         {
-            //SearchTarget();
+            SearchTarget(playerInfo.GetList("Fish"));
         }
         timer += Time.deltaTime;   //計時
     }
-    protected override void SearchTarget(List<GameObject> targets)   //尋找攻擊目標的模式
+    protected override void SearchTarget(List<EntityModel> targets)   //尋找攻擊目標的模式
     {
-        foreach (GameObject creature in targets)
+        foreach (FishModel fish in targets)
         {
-            FishModel fish = creature.GetComponent<FishModel>();
-            RectTransform fishPos = fish.GetComponent<RectTransform>();
+            RectTransform fishPos = fish.gameObject.GetComponent<RectTransform>();
             float distance = ViewDistance;   //初始設為視野距離，即超出視野範圍的不考慮
-            if (Math.Abs(creature.transform.position.x - transform.position.x) < distance)
+            if (Vector2.Distance(m_rectTransform.anchoredPosition, fishPos.anchoredPosition) < distance)
             {
                 distance = Vector2.Distance(m_rectTransform.anchoredPosition, fishPos.anchoredPosition);
                 target = fish;
@@ -70,13 +66,11 @@ sealed public class EnemyModel : CreatureModel
     private void Attack(FishModel fish)
     {
         target = null;   //重製目標為無
+        playerInfo.RemoveElement("Fish", fish);
         Destroy(fish.gameObject);   //直接摧毀物件
-        StartCoroutine(Stop());   //攻擊後硬直
+        StartCoroutine(Stop(attackCD));   //在攻擊CD結束前靜止不動，避免敵人無限制連續亂殺
     }
-    IEnumerator Stop()   //在攻擊CD結束前靜止不動，避免敵人無限制連續亂殺
-    {
-        yield return new WaitForSecondsRealtime(attackCD);
-    }
+    
     private void OnMouseDown()   //玩家以滑鼠點擊攻擊敵人
     {
         HP -= 50f;  //數值暫定，等遊戲系統部分完成

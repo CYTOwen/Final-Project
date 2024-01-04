@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Destructor
   m_EditorClassIdentifier: 
   EnemyName: Destructor
-  Speed: 4
+  Speed: 400
   HP: 300
   AttackCD: 2
   ViewDistance: 1920

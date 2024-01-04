@@ -36,95 +36,125 @@ public class FishModel : CreatureModel
         moneyCD = fishMeta.MoneyCD;
         production = fishMeta.Production;
         maturityPerLevel = fishMeta.MaturityPerLevel;
-        level = 0;
+        level = 1;
         healthState = 0;
         maturity = 0;
         medicine = false;
         m_animator.runtimeAnimatorController = fishMeta.Animation;
         timer = 0f;
-        timeStamp = new float[4] { timer - turnCD, timer - searchCD, timer, timer - moneyCD };   //[0]：最近一次轉彎時間   [1]：最近一次搜索時間   [2]：最近一次餵食時間   [3]：最近一次產生錢的時間
-        turnAnimationTime = 0.5f;
+        timeStamp = new float[5] { timer - turnCD, timer - searchCD, timer, timer - moneyCD, 99999999f };   //[0]：最近一次轉彎時間   [1]：最近一次搜索時間   [2]：最近一次進食時間   [3]：最近一次產生錢的時間   [4]：死亡時間
+        AnimationTime = 0.5f;
     }
     private void Update()
     {
-        Move();
-        SetAnimation();
-        if (timer - timeStamp[1] > searchCD && timer - timeStamp[2] > eatCD && target == null && healthState != 0)   //定時搜索
+        Test();
+        if (healthState != 3)
         {
-            //SearchTarget();
+            Move();
+            SetAnimation();
+            if (timer - timeStamp[1] > searchCD && timer - timeStamp[2] > eatCD && target == null && healthState != 0)   //定時搜索
+            {
+                SearchTarget(playerInfo.GetList("Food"));
+            }
+            if (timer - timeStamp[3] > moneyCD && level >= 2)   //定時生產金幣
+                //Produce();
+            Starve();
         }
-        if (timer - timeStamp[3] > moneyCD && level >= 2)
-            Produce();
+        else
+            AdjustPos();
+        if (timer - timeStamp[4] > 10f)   //死亡超過10秒後屍體消失
+            Destroy(gameObject);
         timer += Time.deltaTime;   //計時
-        Starve();
+    }
+    private void Test()   //測試用函式，記得註解掉
+    {
+        if (Input.GetKeyDown(KeyCode.L))
+            LevelUp();
+        //if (Input.GetKeyDown(KeyCode.F))
     }
     protected override void SetAnimation()
     {
-        if (timer - timeStamp[0] > turnAnimationTime)   //0.5秒：轉身動畫的長度。若動畫時間有更改，需要一起改動
+        if (timer - timeStamp[0] > AnimationTime)   //0.5秒：轉身動畫的長度。若動畫時間有更改，需要一起改動
             m_animator.SetBool("turning", false);
+        if (timer - timeStamp[2] > AnimationTime)   //0.5秒：進食動畫的長度。若動畫時間有更改，需要一起改動
+            m_animator.SetBool("eating", false);
         m_animator.SetInteger("level", level);
         m_animator.SetInteger("healthState", healthState);
     }
     private void Produce()
     {
         timeStamp[3] = timer;
-        /*
-         * ObjectFactory moneyFactory = new MoneyFactory;
-         * moneyFactory.CreateObject(m_rectTransform.anchoredPosition.x,m_rectTransform.anchoredPosition.y,production[level]);
-         */
+        ObjectFactory moneyFactory = new MoneyFactory();
+        moneyFactory.CreateObject(m_rectTransform.anchoredPosition.x, m_rectTransform.anchoredPosition.y, production[level - 1]);
     }
     private void Starve()
     {
-        starvingTime = maxStarvingTime - (timer - timeStamp[2]);
-        healthState = (int)Math.Ceiling(starvingTime * 3f / maxStarvingTime);
-        if (starvingTime <= 0)
+        starvingTime = maxStarvingTime - (timer - timeStamp[2]);   //計算捱餓時間
+        if (starvingTime <= 0 && healthState != 3)   //根據飢餓時間更新魚的健康狀態
             Die();
+        else if (starvingTime <= maxStarvingTime / 3f)
+            healthState = 2;
+        else if (starvingTime <= maxStarvingTime / 3 * 2)
+            healthState = 1;
+        else
+            healthState = 0;
     }
-    protected override void SearchTarget(List<GameObject> targets)   //檢查附近是否有食物
+    protected override void SearchTarget(List<EntityModel> targets)
     {
-        foreach (GameObject Object in targets)
+        float distance = ViewDistance;   //初始設為視野距離，即超出視野範圍的不考慮
+        foreach (FoodModel food in targets)   //尋找最近的食物
         {
-            /*
-             * foodModel food =Object.GetComponent<FoodModel>();
-             * RectTransform foodPos=food.tranform as RectTransform;
-             * float distance = ViewDistance;   //初始設為視野距離，即超出視野範圍的不考慮
-             * if (Math.Abs(Object.transform.position.x - transform.position.x) < distance)
-               {
-                   distance = Vector2.Distance(m_rectTransform.anchoredPosition, foodPos.anchoredPosition);
-                   target = food;
-               }
-            */
+            RectTransform foodPos=food.gameObject.transform as RectTransform;
+            if (Vector2.Distance(m_rectTransform.anchoredPosition, foodPos.anchoredPosition) < distance)
+            {
+                distance = Vector2.Distance(m_rectTransform.anchoredPosition, foodPos.anchoredPosition);
+                target = food;
+            }
+        }
+        if (level == 3 && fishMeta.FishName == "Guppy")   //3級的Guppy還會嘗試尋找星星藥水
+            SearchMedicine(playerInfo.GetList("Medicine"), distance);
+    }
+    private void SearchMedicine(List<EntityModel> targets, float distance)   //尋找最近的藥水
+    {
+        foreach (MedicineModel medicine in targets)
+        {
+            RectTransform medicinePos = medicine.gameObject.transform as RectTransform;
+            if (Vector2.Distance(m_rectTransform.anchoredPosition, medicinePos.anchoredPosition) < distance)
+            {
+                distance = Vector2.Distance(m_rectTransform.anchoredPosition, medicinePos.anchoredPosition);
+                target = medicine;
+            }
         }
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.tag == "Food")
+        if (collision.tag == "Food" && healthState != 0)   //飢餓的魚碰到食物
         {
-            EatFood();
+            EatFood(collision);
             Destroy(collision.gameObject);
         }
-        else if (collision.tag == "Medicine")
+        else if (collision.tag == "Medicine")   //碰到星星藥水
         {
             TakeMedicine();
             Destroy(collision.gameObject);
         }
     }
-    private void EatFood()
+    private void EatFood(Collider2D collision)   //進食
     {
         timeStamp[2] = timer;
-        /*
-         * FoodModel=collision.gameObject.GetComponent<FoodModel>();
-         * maturity+=(float)FishModel.getFoodValue();            
-         */
+        target = null;
+        FoodModel food = collision.gameObject.GetComponent<FoodModel>();
+        maturity += food.getFoodValue();            
+        m_animator.SetBool("eating", true);
         if(maturity>=maturityPerLevel)
             LevelUp();
     }
-    private void LevelUp()
+    private void LevelUp()   //升級
     {
         level = (level < fishMeta.MaxLevel && !medicine) ? level + 1 : level;
         maturity -= maturityPerLevel;
     }
-    private void TakeMedicine()
+    private void TakeMedicine()   //吃藥
     {
         switch(level)
         {
@@ -135,10 +165,27 @@ public class FishModel : CreatureModel
             case 3:
                 medicine = true;
                 break;
+            default:
+                break;
         }
     }
     protected override void Die()  //死亡動作，之後應該會新增音效之類的東西
     {
-        Destroy(gameObject);
+        healthState = 3;
+        m_animator.SetInteger("healthState", healthState);
+        timeStamp[4] = timer;
+        m_rigidbody2D.AddForce(m_rigidbody2D.velocity * -1);
+    }
+    private void AdjustPos()   //控制魚死亡後的位置
+    {
+        if (Math.Abs(m_rectTransform.anchoredPosition.x) >= m_canvas.rect.width / 2f)
+            m_rigidbody2D.velocity = new Vector2(0, m_rigidbody2D.velocity.y);
+        if (m_rectTransform.anchoredPosition.y <= m_canvas.rect.height / -2f)
+        {
+            m_rigidbody2D.gravityScale = 0f;
+            m_rigidbody2D.velocity = Vector2.zero;
+        }
+        else if (m_rectTransform.anchoredPosition.y >= m_canvas.rect.height / 2f)
+            m_rigidbody2D.velocity = new Vector2(m_rigidbody2D.velocity.x, 0);
     }
 }

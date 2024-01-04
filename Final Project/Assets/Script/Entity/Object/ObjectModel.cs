@@ -17,7 +17,7 @@ public class ObjectModel : EntityModel
         
     }
 
-    protected virtual void when_object_auto_dissapear(ref float timer,GameObject gameObject) //when object drop to bottom,exist through a time and dissapear
+    protected virtual void when_object_auto_dissapear(ref float timer,GameObject gameObject) //when object drop to bottom,exist through Fish time and dissapear
     {
         if (gameObject.transform.position.y <= -3.7f)
         {

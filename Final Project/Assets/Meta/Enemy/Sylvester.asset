@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Sylvester
   m_EditorClassIdentifier: 
   EnemyName: Sylvester
-  Speed: 4.5
+  Speed: 450
   HP: 300
   AttackCD: 1
   ViewDistance: 1280

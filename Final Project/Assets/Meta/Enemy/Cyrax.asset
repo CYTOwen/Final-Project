@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Cyrax
   m_EditorClassIdentifier: 
   EnemyName: Cyrax
-  Speed: 2
+  Speed: 200
   HP: 600
   AttackCD: 3
   ViewDistance: 1440

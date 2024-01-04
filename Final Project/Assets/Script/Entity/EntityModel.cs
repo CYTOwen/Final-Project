@@ -4,5 +4,7 @@ using UnityEngine;
 
 public class EntityModel : MonoBehaviour
 {
+    [SerializeField]
+    protected PlayerInfo playerInfo;
     protected string entityName;
 }

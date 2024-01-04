@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Balrog
   m_EditorClassIdentifier: 
   EnemyName: Balrog
-  Speed: 3
+  Speed: 300
   HP: 500
   AttackCD: 3
   ViewDistance: 1440
