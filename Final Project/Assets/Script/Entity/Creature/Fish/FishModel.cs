@@ -61,6 +61,7 @@ public class FishModel : CreatureModel
             SetAnimation();
             if (timer - timeStamp[1] > searchCD && timer - timeStamp[2] > eatCD && target == null && healthState != 0)   //定時搜索
             {
+                //Debug.Log(string.Format("{0}  {1}  {2}  {3}", timer - timeStamp[1] > searchCD, timer - timeStamp[2] > eatCD, target, healthState));
                 SearchTarget(playerInfo.GetList("Food"));
             }
             if (timer - timeStamp[3] > moneyCD && level >= 2)   //定時生產金幣
@@ -79,12 +80,14 @@ public class FishModel : CreatureModel
             LevelUp();
         if (Input.GetKeyDown(KeyCode.C))
         {
+            /*
             timeStamp[2] = timer;
             target = null;
             maturity += 30;
             m_animator.SetBool("eating", true);
             if (maturity >= maturityPerLevel)
                 LevelUp();
+            */
         }
     }
     protected override void SetAnimation()
@@ -99,7 +102,7 @@ public class FishModel : CreatureModel
     private void Produce()
     {
         timeStamp[3] = timer;
-        moneyFactory.CreateObject(m_rectTransform.anchoredPosition.x, m_rectTransform.anchoredPosition.y, production[level]);
+        moneyFactory.CreateObject(m_rectTransform.anchoredPosition.x, m_rectTransform.anchoredPosition.y, production[level - 1]);
     }
     private void Starve()
     {
@@ -118,10 +121,9 @@ public class FishModel : CreatureModel
         float distance = ViewDistance;   //初始設為視野距離，即超出視野範圍的不考慮
         foreach (FoodModel food in targets)   //尋找最近的食物
         {
-            RectTransform foodPos=food.gameObject.transform as RectTransform;
-            if (Vector2.Distance(m_rectTransform.anchoredPosition, foodPos.anchoredPosition) < distance)
+            if (Vector2.Distance(m_rectTransform.anchoredPosition, food.gameObject.transform.position) < distance)
             {
-                distance = Vector2.Distance(m_rectTransform.anchoredPosition, foodPos.anchoredPosition);
+                distance = Vector2.Distance(m_rectTransform.anchoredPosition, food.gameObject.transform.position);
                 target = food;
             }
         }
@@ -132,10 +134,9 @@ public class FishModel : CreatureModel
     {
         foreach (MedicineModel medicine in targets)
         {
-            RectTransform medicinePos = medicine.gameObject.transform as RectTransform;
-            if (Vector2.Distance(m_rectTransform.anchoredPosition, medicinePos.anchoredPosition) < distance)
+            if (Vector2.Distance(m_rectTransform.anchoredPosition, medicine.gameObject.transform.position) < distance)
             {
-                distance = Vector2.Distance(m_rectTransform.anchoredPosition, medicinePos.anchoredPosition);
+                distance = Vector2.Distance(m_rectTransform.anchoredPosition, medicine.gameObject.transform.position);
                 target = medicine;
             }
         }
@@ -165,6 +166,8 @@ public class FishModel : CreatureModel
     }
     private void LevelUp()   //升級
     {
+        if(level<3)
+            m_capsuleCollider2D.size += new Vector2(0.2f, 0.2f);   //體型變大，碰撞箱變大
         level = (level < fishMeta.MaxLevel && !medicine) ? level + 1 : level;
         maturity -= maturityPerLevel;
     }
@@ -190,6 +193,7 @@ public class FishModel : CreatureModel
         timeStamp[4] = timer;
         m_rigidbody2D.AddForce(m_rigidbody2D.velocity * -1);
         m_audioSource.Play();
+        playerInfo.RemoveElement("Fish", this);
     }
     private void AdjustPos()   //控制魚死亡後的位置
     {

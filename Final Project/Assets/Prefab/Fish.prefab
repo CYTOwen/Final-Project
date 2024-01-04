@@ -101,7 +101,7 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 0.5, y: 0.5}
   m_Direction: 0
 --- !u!95 &4693048930222323938
 Animator:
@@ -191,6 +191,7 @@ MonoBehaviour:
   playerInfo: {fileID: 0}
   m_canvas: {fileID: 0}
   m_rigidbody2D: {fileID: 7928152348231007704}
+  m_capsuleCollider2D: {fileID: 3368309056339884594}
   m_rectTransform: {fileID: 1059257158482685574}
   m_animator: {fileID: 4693048930222323938}
   m_spriteRenderer: {fileID: 4940826444175997683}

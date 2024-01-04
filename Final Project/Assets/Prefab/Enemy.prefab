@@ -57,6 +57,7 @@ MonoBehaviour:
   playerInfo: {fileID: 0}
   m_canvas: {fileID: 0}
   m_rigidbody2D: {fileID: 3855879026885213526}
+  m_capsuleCollider2D: {fileID: 2428297343456866211}
   m_rectTransform: {fileID: 4146352103981428615}
   m_animator: {fileID: 5142434343644781299}
   m_spriteRenderer: {fileID: 2271102228342453459}

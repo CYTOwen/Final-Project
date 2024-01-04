@@ -72,11 +72,14 @@ sealed public class EnemyModel : CreatureModel
         target = null;   //重製目標為無
         huntingMode = false;
         playerInfo.RemoveElement("Fish", fish);
+        m_audioSource.clip = playerInfo.audioClips[1];   //播放指定音效
+        m_audioSource.Play();
         Destroy(fish.gameObject);   //直接摧毀物件
     }
     
     private void OnMouseDown()   //玩家以滑鼠點擊攻擊敵人
     {
+        m_audioSource.clip = playerInfo.audioClips[0];   //撥放指定音效
         m_audioSource.Play();
         HP -= 50f;  //數值暫定，等遊戲系統部分完成
         if (HP <= 0)

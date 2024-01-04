@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29a326498adca684297403e584490cce, type: 3}
   m_Name: Balrog
   m_EditorClassIdentifier: 
-  EnemyName: Balrog
+  EnemyName: Barlog
   Speed: 300
   HP: 500
   AttackCD: 3

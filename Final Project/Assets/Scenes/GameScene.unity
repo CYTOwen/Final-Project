@@ -362,6 +362,9 @@ MonoBehaviour:
   Enemies: []
   Food: []
   Medicine: []
+  audioClips:
+  - {fileID: 8300000, guid: 7cbb8c35876855c4bb20d7525132d50d, type: 3}
+  - {fileID: 8300000, guid: 532189aa58bed9a449ebea2b0306e8f6, type: 3}
 --- !u!4 &731835400
 Transform:
   m_ObjectHideFlags: 0
@@ -394,6 +397,7 @@ GameObject:
   - component: {fileID: 837251126}
   - component: {fileID: 837251127}
   - component: {fileID: 837251128}
+  - component: {fileID: 837251129}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -574,11 +578,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d31e9bedcbcab942a97df45a2c434c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerInfo: {fileID: 0}
   money:
   - {fileID: 7344555357388778646, guid: eacd784818f337349a982029b2009ead, type: 3}
   - {fileID: 5936644729697601573, guid: 63bc6053691f85d4b910a7f42a925495, type: 3}
   - {fileID: 5129065641749905184, guid: 4e7ca46b0d7e32141ae2500dc0985a26, type: 3}
   - {fileID: 5537873275335652664, guid: 7a367b742ec988c4da41c23c9d4ca8ac, type: 3}
+  parent: {fileID: 1185919704}
+--- !u!114 &837251129
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 837251119}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f342cf99c161d3445864980e724e7897, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerInfo: {fileID: 731835399}
+  food:
+  - {fileID: 2985392121119325440, guid: b3c042b54d9745744bcf204ee11fe8f0, type: 3}
+  - {fileID: 8477005769785403763, guid: ea68af5d33bdbf745b27326cead46c75, type: 3}
+  - {fileID: 3655114170763205022, guid: c3a7fddb7c2467b4a8f063980d26c8ce, type: 3}
+  - {fileID: 6442499434914668628, guid: 329ee2dcd5250c14da75ec6e0a458d25, type: 3}
   parent: {fileID: 1185919704}
 --- !u!1 &1185919704
 GameObject:

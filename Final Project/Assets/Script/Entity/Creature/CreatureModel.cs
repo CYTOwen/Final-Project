@@ -17,6 +17,8 @@ public class CreatureModel : EntityModel
     [SerializeField]
     protected Rigidbody2D m_rigidbody2D;   //掛在生物上的鋼體
     [SerializeField]
+    protected CapsuleCollider2D m_capsuleCollider2D;
+    [SerializeField]
     protected RectTransform m_rectTransform;   //掛在生物上的RectTransform
     [SerializeField]
     protected Animator m_animator;   //掛在生物上的動畫

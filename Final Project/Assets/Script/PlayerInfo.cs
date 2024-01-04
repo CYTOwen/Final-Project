@@ -12,6 +12,7 @@ public class PlayerInfo : MonoBehaviour
     private List<EntityModel> Food;
     [SerializeField]
     private List<EntityModel> Medicine;
+    public List<AudioClip> audioClips;
     public List<EntityModel> GetList(string name)   //根據名字回傳相應的list
     {
         switch (name)

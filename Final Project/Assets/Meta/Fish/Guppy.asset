@@ -19,7 +19,7 @@ MonoBehaviour:
   SearchCD: 1
   TurnCD: 1.5
   EatCD: 3
-  MaxStarvingTime: 60
+  MaxStarvingTime: 10
   MoneyCD: 30
   MaturityPerLevel: 100
   MaxLevel: 4

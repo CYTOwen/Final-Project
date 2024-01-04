@@ -8,23 +8,14 @@ public class FoodFactory : ObjectFactory
     private List<GameObject> food;
     [SerializeField]
     private GameObject parent;
+    private void Update()
+    {
+        if (Input.GetKeyUp(KeyCode.C))
+            CreateObject(0, 300, 1);
+    }
     public override void CreateObject(float X, float Y, int level)
     {
-        if (level == 1)
-        {
-            Instantiate(food[0], new Vector2(X, Y), Quaternion.identity, parent.transform);
-        }
-        else if (level == 2)
-        {
-            Instantiate(food[1], new Vector2(X, Y), Quaternion.identity, parent.transform);
-        }
-        else if (level == 3)
-        {
-            Instantiate(food[2], new Vector2(X, Y), Quaternion.identity, parent.transform);
-        }
-        else if (level == 4)
-        {
-            Instantiate(food[3], new Vector2(X, Y), Quaternion.identity, parent.transform);
-        }
+        FoodModel f = Instantiate(food[level - 1], new Vector2(X, Y), Quaternion.identity, parent.transform).GetComponent<FoodModel>();
+        //playerInfo.AddElement("Food", f);
     }
 }
