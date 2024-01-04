@@ -10,8 +10,9 @@ public class PlayerInfo : MonoBehaviour
     private int money;
     private int shellCount;
     private int fishCount;
-    private int mouseLevel;
+    private int mouseAtk;
     private int foodLevel;
+    private bool buyMedicineOrNot;
     [SerializeField]
     private List<EntityModel> Fish;
     [SerializeField]
@@ -32,8 +33,9 @@ public class PlayerInfo : MonoBehaviour
         shellCount = 0;
         fishCount = 0;
         petUnlock = 0;
-        mouseLevel = 1;
+        mouseAtk = 50;
         foodLevel = 1;
+        buyMedicineOrNot = false;
     }
 
     public int getTank() { return tank; }
@@ -42,12 +44,17 @@ public class PlayerInfo : MonoBehaviour
     public int getShellCount() { return shellCount; }
     public int getFishCount() { return fishCount; }
     public int getPetUnlock() { return petUnlock; }
-    public int getMouseLevel() { return mouseLevel; }
+    public int getMouseAtk() { return mouseAtk; }
     public int getFoodLevel() { return foodLevel; }
+    public bool getBuyMedicineOrNot() {  return buyMedicineOrNot; }
 
     public void addMoney(int earnMoney)
     {
         money += earnMoney;
+    }
+    public void minusMoney(int spendMoney)
+    {
+        money -= spendMoney;
     }
     public void addShell()
     {
@@ -62,13 +69,21 @@ public class PlayerInfo : MonoBehaviour
     {
         petUnlock++;
     }
-    public void addMouseLevel()
+    public void addMouseAtk()
     {
-        mouseLevel++;
+        mouseAtk+=50;
     }
     public void addFoodLevel()
     {
         foodLevel++;
+    }
+    public void buyMedicine()
+    {
+        buyMedicineOrNot = true;
+    }
+    public void feedMedicine()
+    {
+        buyMedicineOrNot = false;
     }
 
     public void resetLevel()
@@ -76,8 +91,9 @@ public class PlayerInfo : MonoBehaviour
         money = 100;
         shellCount = 0;
         fishCount = 0;
-        mouseLevel = 1;
+        mouseAtk = 1;
         foodLevel = 1;
+        buyMedicineOrNot = false;
     }
     public List<EntityModel> GetList(string name)   //根據名字回傳相應的list
     {

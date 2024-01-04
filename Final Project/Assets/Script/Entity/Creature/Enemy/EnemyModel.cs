@@ -8,6 +8,7 @@ sealed public class EnemyModel : CreatureModel
     private EnemyMeta enemyMeta;   //寄把计
     private float attackCD;
     private bool huntingMode = false;
+    [SerializeField]
 
     void Start()   //﹍て
     {
@@ -77,8 +78,9 @@ sealed public class EnemyModel : CreatureModel
     
     private void OnMouseDown()   //產菲公翴阑ю阑寄
     {
+        float dmg = (float)GameObject.Find("Data").GetComponent<PlayerInfo>().getMouseAtk();
         m_audioSource.Play();
-        HP -= 50f;  //计既﹚单笴栏╰参场だЧΘ
+        HP -= dmg;  //计既﹚单笴栏╰参场だЧΘ
         if (HP <= 0)
             Die();
     }

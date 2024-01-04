@@ -30,6 +30,7 @@ public class MoneyModel : ObjectModel
 
     void OnMouseDown()
     {
+        GameObject.Find("Data").GetComponent<PlayerInfo>().addMoney(getMoneyValue());
         Destroy(gameObject);
     }
 
