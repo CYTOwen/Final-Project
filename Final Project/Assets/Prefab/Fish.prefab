@@ -31,7 +31,7 @@ RectTransform:
   m_GameObject: {fileID: 5450654594015449407}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 100, y: 100, z: 1}
+  m_LocalScale: {x: 200, y: 200, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -196,6 +196,7 @@ MonoBehaviour:
   m_spriteRenderer: {fileID: 4940826444175997683}
   m_audioSource: {fileID: -2286293346624324934}
   fishMeta: {fileID: 11400000, guid: 5c46bf1afb972744a8b572b3fca6c187, type: 2}
+  moneyFactory: {fileID: 0}
 --- !u!82 &-2286293346624324934
 AudioSource:
   m_ObjectHideFlags: 0
