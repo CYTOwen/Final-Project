@@ -22,6 +22,8 @@ public class CreatureModel : EntityModel
     protected Animator m_animator;   //掛在生物上的動畫
     [SerializeField]
     protected SpriteRenderer m_spriteRenderer;   //掛在生物上的SpriteRenderer
+    [SerializeField]
+    protected AudioSource m_audioSource;   //掛在生物上的音效
 
     protected float timer;
     protected float[] timeStamp;   //用來記錄關鍵時刻
@@ -53,6 +55,8 @@ public class CreatureModel : EntityModel
         {
             RectTransform targetPos = target.GetComponent<RectTransform>();
             m_rigidbody2D.velocity = (targetPos.anchoredPosition - m_rectTransform.anchoredPosition).normalized * speed;
+            if ((facingLeft && m_rigidbody2D.velocity.x > 0) || (!facingLeft && m_rigidbody2D.velocity.x < 0))
+                Turn();
         }
         else   //平移
         {
@@ -64,7 +68,6 @@ public class CreatureModel : EntityModel
             if (m_rectTransform.anchoredPosition.y < m_canvas.rect.height / -2f + 50f)
                 m_rigidbody2D.AddForce(new Vector2(0, 100f));
         }
-        Debug.Log(Vector3.Magnitude(m_rigidbody2D.velocity));
     }
     private void Turn()
     {
@@ -90,9 +93,5 @@ public class CreatureModel : EntityModel
     protected virtual void Die()
     {
 
-    }
-    protected IEnumerator Stop(float time)   //停止不動
-    {
-        yield return new WaitForSecondsRealtime(time);
     }
 }

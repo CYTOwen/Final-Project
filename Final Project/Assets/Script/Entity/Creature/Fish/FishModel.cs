@@ -14,6 +14,9 @@ public class FishModel : CreatureModel
     private int[] production;
     private int maturityPerLevel;
 
+    [SerializeField]
+    private MoneyFactory moneyFactory;
+
     private int level;
     private int healthState;   //健康狀態     0：正常   1：捱餓   2：生病   3：死亡
     private int maturity;
@@ -45,6 +48,10 @@ public class FishModel : CreatureModel
         timeStamp = new float[5] { timer - turnCD, timer - searchCD, timer, timer - moneyCD, 99999999f };   //[0]：最近一次轉彎時間   [1]：最近一次搜索時間   [2]：最近一次進食時間   [3]：最近一次產生錢的時間   [4]：死亡時間
         AnimationTime = 0.5f;
     }
+    public void GetFactory(MoneyFactory factory)
+    {
+        moneyFactory = factory;
+    }
     private void Update()
     {
         Test();
@@ -57,7 +64,7 @@ public class FishModel : CreatureModel
                 SearchTarget(playerInfo.GetList("Food"));
             }
             if (timer - timeStamp[3] > moneyCD && level >= 2)   //定時生產金幣
-                //Produce();
+                Produce();
             Starve();
         }
         else
@@ -70,7 +77,15 @@ public class FishModel : CreatureModel
     {
         if (Input.GetKeyDown(KeyCode.L))
             LevelUp();
-        //if (Input.GetKeyDown(KeyCode.F))
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            timeStamp[2] = timer;
+            target = null;
+            maturity += 30;
+            m_animator.SetBool("eating", true);
+            if (maturity >= maturityPerLevel)
+                LevelUp();
+        }
     }
     protected override void SetAnimation()
     {
@@ -84,8 +99,7 @@ public class FishModel : CreatureModel
     private void Produce()
     {
         timeStamp[3] = timer;
-        ObjectFactory moneyFactory = new MoneyFactory();
-        moneyFactory.CreateObject(m_rectTransform.anchoredPosition.x, m_rectTransform.anchoredPosition.y, production[level - 1]);
+        moneyFactory.CreateObject(m_rectTransform.anchoredPosition.x, m_rectTransform.anchoredPosition.y, production[level]);
     }
     private void Starve()
     {
@@ -175,6 +189,7 @@ public class FishModel : CreatureModel
         m_animator.SetInteger("healthState", healthState);
         timeStamp[4] = timer;
         m_rigidbody2D.AddForce(m_rigidbody2D.velocity * -1);
+        m_audioSource.Play();
     }
     private void AdjustPos()   //控制魚死亡後的位置
     {
