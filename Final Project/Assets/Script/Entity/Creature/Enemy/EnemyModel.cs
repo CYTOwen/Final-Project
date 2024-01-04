@@ -29,13 +29,16 @@ sealed public class EnemyModel : CreatureModel
         turnCD = enemyMeta.TrunCD;
         m_animator.runtimeAnimatorController = enemyMeta.Animation;
         timer = 0;
-        timeStamp = new float[2] { timer - turnCD, timer - searchCD };   //[0]：最近一次轉彎時間   [1]：最近一次搜索時間
+        timeStamp = new float[3] { timer - turnCD, timer - searchCD, timer - attackCD };   //[0]：最近一次轉彎時間   [1]：最近一次搜索時間   [2]：最近一次攻擊時間
         AnimationTime = 0.5f;
     }
     // Update is called once per frame
     void Update()
     {
-        Move();
+        if (timer - timeStamp[2] > attackCD)   //攻擊CD中不會動
+            Move();
+        else
+            m_rigidbody2D.velocity = Vector2.zero;
         SetAnimation();
         if (timer - timeStamp[1] > searchCD && target == null)   //定時搜索
         {
@@ -65,14 +68,16 @@ sealed public class EnemyModel : CreatureModel
     }
     private void Attack(FishModel fish)
     {
+        timeStamp[2] = timer;
         target = null;   //重製目標為無
+        huntingMode = false;
         playerInfo.RemoveElement("Fish", fish);
         Destroy(fish.gameObject);   //直接摧毀物件
-        StartCoroutine(Stop(attackCD));   //在攻擊CD結束前靜止不動，避免敵人無限制連續亂殺
     }
     
     private void OnMouseDown()   //玩家以滑鼠點擊攻擊敵人
     {
+        m_audioSource.Play();
         HP -= 50f;  //數值暫定，等遊戲系統部分完成
         if (HP <= 0)
             Die();

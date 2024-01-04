@@ -30,7 +30,7 @@ public class MoneyModel : ObjectModel
 
     void OnMouseDown()
     {
-        gameObject.SetActive(false);
+        Destroy(gameObject);
     }
 
 
