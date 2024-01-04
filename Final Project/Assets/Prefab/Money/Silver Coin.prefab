@@ -15,26 +15,30 @@ GameObject:
   - component: {fileID: 6535641515487181821}
   m_Layer: 0
   m_Name: Silver Coin
-  m_TagString: Untagged
+  m_TagString: Money
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &600671842924044597
-Transform:
+--- !u!224 &600671842924044597
+RectTransform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7344555357388778646}
-  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.92, y: 3.92, z: 0.11583}
-  m_LocalScale: {x: 200, y: 200, z: 2.926379}
+  m_LocalPosition: {x: 0, y: 0, z: 0.11583}
+  m_LocalScale: {x: 300, y: 300, z: 2.926379}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -0.92, y: 3.92}
+  m_SizeDelta: {x: 0.35, y: 0.34}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!95 &6746503819253141316
 Animator:
   serializedVersion: 5

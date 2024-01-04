@@ -15,26 +15,30 @@ GameObject:
   - component: {fileID: 4177583971287701345}
   m_Layer: 0
   m_Name: Star
-  m_TagString: Untagged
+  m_TagString: Money
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &1323352334513564211
-Transform:
+--- !u!224 &1323352334513564211
+RectTransform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5129065641749905184}
-  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.6334982, y: 0.018736, z: 0.1083962}
-  m_LocalScale: {x: 200, y: 200, z: 1.9782}
+  m_LocalPosition: {x: 0, y: 0, z: 0.1083962}
+  m_LocalScale: {x: 300, y: 300, z: 1.9782}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 1.6334982, y: 0.018736}
+  m_SizeDelta: {x: 0.44, y: 0.42}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!212 &7211569724088223529
 SpriteRenderer:
   m_ObjectHideFlags: 0
