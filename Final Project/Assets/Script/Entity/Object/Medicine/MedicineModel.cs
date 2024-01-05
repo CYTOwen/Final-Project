@@ -6,11 +6,6 @@ public class MedicineModel : ObjectModel
 {
     [SerializeField]
     public MedicineScriptTable medicine;
-    public Animator animator;
-    private void Start()
-    {
-        animator.runtimeAnimatorController = medicine.Animation;
-    }
     private void Update()
     {
         dropdown(gameObject);

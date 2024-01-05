@@ -14,14 +14,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   FishName: Guppy
   Cost: 100
-  Speed: 50
+  Speed: 100
   ViewDistance: 1600
   SearchCD: 1
   TurnCD: 1.5
   EatCD: 3
-  MaxStarvingTime: 10
-  MoneyCD: 30
+  MaxStarvingTime: 30
+  MoneyCD: 10
   MaturityPerLevel: 100
   MaxLevel: 4
-  Production: 00000000010000000200000003000000
+  Production: 01000000010000000200000004000000
   Animation: {fileID: 9100000, guid: 5073503e09336e84d9a92ea0b76fef99, type: 2}

@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Ulysses
   m_EditorClassIdentifier: 
   EnemyName: Ulysses
-  Speed: 150
-  HP: 750
+  Speed: 100
+  HP: 650
   AttackCD: 3.5
   ViewDistance: 1440
   SearchCD: 2

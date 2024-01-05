@@ -35,10 +35,6 @@ public class CreatureModel : EntityModel
     {
         m_canvas = canvas;
     }
-    public virtual void GetPlayerInfo(PlayerInfo Info)
-    {
-        playerInfo = Info;
-    }
     protected virtual void Move()
     {
         int x = rand.Next(1000);   //隨機行動，每幀有0.3%的機率轉彎
@@ -65,10 +61,10 @@ public class CreatureModel : EntityModel
             int x = rand.Next(-30, 31);
             m_rigidbody2D.velocity = new Vector2(((facingLeft) ? -1 * speed : speed), m_rigidbody2D.velocity.y);
             m_rigidbody2D.velocity += new Vector2(0, (m_rigidbody2D.velocity.y > 100f || m_rigidbody2D.velocity.y < -100f) ? m_rigidbody2D.velocity.y / -2 : rand.Next(-3, 4));
-            if (m_rectTransform.anchoredPosition.y > m_canvas.rect.height / 2f - 50f)
-                m_rigidbody2D.AddForce(new Vector2(0, -100f));
+            if (m_rectTransform.anchoredPosition.y > m_canvas.rect.height / 2f - 150f)
+                m_rigidbody2D.AddForce(new Vector2(0, -300f));
             if (m_rectTransform.anchoredPosition.y < m_canvas.rect.height / -2f + 50f)
-                m_rigidbody2D.AddForce(new Vector2(0, 100f));
+                m_rigidbody2D.AddForce(new Vector2(0, 300f));
         }
     }
     private void Turn()

@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Balrog
   m_EditorClassIdentifier: 
   EnemyName: Barlog
-  Speed: 300
-  HP: 500
+  Speed: 200
+  HP: 400
   AttackCD: 3
   ViewDistance: 1440
   SearchCD: 2

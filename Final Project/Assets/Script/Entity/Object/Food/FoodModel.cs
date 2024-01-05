@@ -6,12 +6,6 @@ public class FoodModel : ObjectModel
 {
     [SerializeField]
     public FoodScriptTable food;
-    public Animator animator;
-
-    private void Start()
-    {
-        animator.runtimeAnimatorController = food.Animation;
-    }
 
     private void Update()
     {
@@ -20,7 +14,7 @@ public class FoodModel : ObjectModel
         
     }
 
-
+    /*
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.tag == "Fish")
@@ -28,7 +22,7 @@ public class FoodModel : ObjectModel
             Destroy(gameObject);
         }
     }
-
+    */
     public int getFoodValue()
     {
         return food.food_value;

@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Gus
   m_EditorClassIdentifier: 
   EnemyName: Gus
-  Speed: 250
-  HP: 700
+  Speed: 200
+  HP: 600
   AttackCD: 3
   ViewDistance: 960
   SearchCD: 2

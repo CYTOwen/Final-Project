@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using UnityEngine;
 
 public class ObjectModel : EntityModel
@@ -25,6 +26,12 @@ public class ObjectModel : EntityModel
         }
         if (timer > 5f)
         {
+            try
+            {
+                playerInfo.RemoveElement("Food", gameObject.GetComponent<FoodModel>());
+                playerInfo.RemoveElement("Medicine", gameObject.GetComponent<MedicineModel>());
+            }
+            catch { }
             Destroy(gameObject);
         }
     }

@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Animations;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "New enemy", menuName = "Entity/Creature/Enemy")]
@@ -13,5 +12,5 @@ public class EnemyMeta : ScriptableObject
     public float ViewDistance;   //視野，敵人只會偵測視野內的物件
     public float SearchCD;   //搜索間隔(sec)，每次嘗試搜索的間隔
     public float TrunCD;   //最短轉身間隔，兩次轉身不能小於此值(除非碰到牆壁)
-    public AnimatorController Animation;   //掛在敵人上的動畫
+    public RuntimeAnimatorController Animation;   //掛在敵人上的動畫
 }

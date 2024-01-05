@@ -10,12 +10,6 @@ public class FishFactory : CreatureFactory
     private GameObject parent;
     [SerializeField]
     private MoneyFactory moneyFactory;
-    // Update is called once per frame
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.F))
-            CreateCreature();
-    }
     public override CreatureModel CreateCreature()
     {
         FishModel fish = Instantiate(fishPrefab, new Vector2(rand.Next((int)(canvas.rect.width / -3f), (int)(canvas.rect.width / 3)), rand.Next((int)(canvas.rect.height / -3f), (int)(canvas.rect.height / 3))), Quaternion.Euler(0, 0, 0), parent.transform).GetComponent<FishModel>();
